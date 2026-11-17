@@ -9,11 +9,10 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2022",
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": ["node", "jest"],
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
