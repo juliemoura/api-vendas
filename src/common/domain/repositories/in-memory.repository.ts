@@ -100,10 +100,10 @@ export abstract class InMemoryRepository<Model extends ModelProps>
     }
     return [...items].sort((a, b) => {
       if (a[sort] < b[sort]) {
-        return sort_dir === 'asc' ? 1 : -1
+        return sort_dir === 'asc' ? -1 : 1
       }
       if (a[sort] > b[sort]) {
-        return sort_dir === 'asc' ? -1 : 1
+        return sort_dir === 'asc' ? 1 : -1
       }
       return 0
     })
