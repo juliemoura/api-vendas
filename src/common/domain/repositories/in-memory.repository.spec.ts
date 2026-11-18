@@ -418,5 +418,82 @@ describe('InMemoryRepository Unit Tests', () => {
         filter: null,
       })
     })
+
+    it('should apply using filter, sort and paginate', async () => {
+      const itemsD = [
+        {
+          id: randomUUID(),
+          name: 'TEST',
+          price: 10,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id: randomUUID(),
+          name: 'a',
+          price: 20,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id: randomUUID(),
+          name: 'test',
+          price: 30,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id: randomUUID(),
+          name: 'e',
+          price: 40,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id: randomUUID(),
+          name: 'TeSt',
+          price: 50,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+      ]
+      sut.items = itemsD
+
+      let result = await sut.search({
+        page: 1,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'asc',
+        filter: 'TEST',
+      })
+
+      expect(result).toStrictEqual({
+        items: [itemsD[0], itemsD[4]],
+        total: 3,
+        current_page: 1,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'asc',
+        filter: 'TEST',
+      })
+
+      result = await sut.search({
+        page: 1,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'desc',
+        filter: 'test',
+      })
+
+      expect(result).toStrictEqual({
+        items: [itemsD[2], itemsD[4]],
+        total: 3,
+        current_page: 1,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'desc',
+        filter: 'test',
+      })
+    })
   })
 })
