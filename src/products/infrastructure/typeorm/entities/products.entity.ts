@@ -1,4 +1,4 @@
-import { ProductModel } from '@/products/domain/models/produts.model'
+import { ProductModel } from '@/products/domain/models/products.model'
 import {
   Column,
   CreateDateColumn,
