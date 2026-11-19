@@ -39,8 +39,8 @@ export class ProductsInMemoryRepository
   async conflictingName(name: string): Promise<void> {
     const product = this.items.find(item => item.name === name)
 
-    if (!product) {
-      throw new ConflictError(`Product with name ${name} already exists`)
+    if (product) {
+      throw new ConflictError(`Product with name already exists`)
     }
   }
 
