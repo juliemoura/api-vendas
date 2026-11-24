@@ -1,0 +1,69 @@
+import {
+  SearchInput,
+  SearchOutput,
+} from '@/common/domain/repositories/repository.interface'
+import { ProductModel } from '@/products/domain/models/products.model'
+import {
+  CreateProductProps,
+  ProductId,
+  ProductsRepository,
+} from '@/products/domain/repositories/products.repository'
+import { Repository } from 'typeorm'
+import { Product } from '../entities/products.entity'
+import { dataSource } from '@/common/infrastructure/typeorm'
+import { NotFoundError } from '@/common/domain/errors/not-found-error'
+
+export class ProductsTypeOrmRepository implements ProductsRepository {
+  sortableFields: string[] = ['name', 'created_at']
+  productsRepository: Repository<Product>
+
+  constructor() {
+    this.productsRepository = dataSource.getRepository(Product)
+  }
+
+  findByName(name: string): Promise<ProductModel> {
+    throw new Error('Method not implemented.')
+  }
+
+  findById(id: string): Promise<ProductModel> {
+    return this._get(id)
+  }
+
+  findAllByIds(productIds: ProductId[]): Promise<ProductModel[]> {
+    throw new Error('Method not implemented.')
+  }
+
+  conflictingName(name: string): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+
+  create(props: CreateProductProps): ProductModel {
+    return this.productsRepository.create(props)
+  }
+
+  async insert(model: ProductModel): Promise<ProductModel> {
+    return await this.productsRepository.save(model)
+  }
+
+  async update(model: ProductModel): Promise<ProductModel> {
+    await this._get(model.id)
+    await this.productsRepository.update({ id: model.id }, model)
+    return model
+  }
+
+  delete(id: string): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+
+  search(props: SearchInput): Promise<SearchOutput<ProductModel>> {
+    throw new Error('Method not implemented.')
+  }
+
+  protected async _get(id: string): Promise<ProductModel> {
+    const product = await this.productsRepository.findOneBy({ id })
+    if (!product) {
+      throw new NotFoundError(`Product with id ${id} not found`)
+    }
+    return product
+  }
+}
