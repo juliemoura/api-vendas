@@ -1,4 +1,4 @@
-import { env } from '@/common/env'
+import { env } from '@/common/infrastructure/env'
 import { app } from './app'
 import { dataSource } from '../typeorm'
 
