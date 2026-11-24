@@ -1,4 +1,4 @@
-import { env } from '@/common/env'
+import { env } from '@/common/infrastructure/env'
 import { DataSource } from 'typeorm'
 
 export const testDataSource = new DataSource({
