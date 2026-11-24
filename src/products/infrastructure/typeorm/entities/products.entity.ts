@@ -21,9 +21,15 @@ export class Product implements ProductModel {
   @Column('int')
   quantity: number
 
-  @CreateDateColumn('created_at')
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+  })
   created_at: Date
 
-  @UpdateDateColumn('updated_at')
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+  })
   updated_at: Date
 }
